@@ -39,9 +39,13 @@ public class User {
     private String username;
 
 
+//    @ManyToMany
+//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    private Set<Role> roles = new HashSet<>();
+
     @ManyToMany
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<Role> roles = new HashSet<>();
+    @JoinTable(name = "user_calendar", joinColumns = @JoinColumn(name = "calendar_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<Calendar> calendar = new HashSet<>();
 
     public User() {
     }
@@ -87,12 +91,12 @@ public class User {
         this.username = username;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<Calendar> getCalendar() {
+        return calendar;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setCalendar(Set<Calendar> calendar) {
+        this.calendar = calendar;
     }
 
     @Override
@@ -117,7 +121,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
-                ", roles=" + roles +
+                ", calendar=" + calendar +
                 '}';
     }
 }
