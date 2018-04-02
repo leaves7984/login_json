@@ -15,10 +15,10 @@ public class Calendar {
     @Column(name="date")
     private String date;
 
-//    @ManyToMany(mappedBy = "calendars")
-//    @JoinTable(name = "calendar_schedule", joinColumns = @JoinColumn(name = "schedule_id"),
-//    inverseJoinColumns = @JoinColumn(name = "calendar_id"))
-//    private Set<Schedule> schedules = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "calendar_schedule", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "calendar_id"))
+    private Set<Schedule> schedules = new HashSet<>();
 
     public Calendar() {
     }
@@ -44,13 +44,13 @@ public class Calendar {
         this.date = date;
     }
 
-//    public Set<Schedule> getSchedules() {
-//        return schedules;
-//    }
-//
-//    public void setSchedules(Set<Schedule> schedules) {
-//        this.schedules = schedules;
-//    }
+    public Set<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(Set<Schedule> schedules) {
+        this.schedules = schedules;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -72,7 +72,7 @@ public class Calendar {
         return "Calendar{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
-//                ", schedules=" + schedules +
+                ", schedules=" + schedules +
                 '}';
     }
 }
