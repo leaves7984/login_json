@@ -1,54 +1,57 @@
 package com.example.easynotes.model;
 
-
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "sleep")
-public class Sleep {
+@Table(name="category")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "sleep_id")
-    private Long sleep_id;
+    @Column(name = "category_id")
+    private Long id;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
-    private String description;
-
-
-    @Column(name = "article" , length = 65535, columnDefinition="TEXT")
+    @Column(name = "description" , length = 65535, columnDefinition="TEXT")
     @Type(type="text")
-    private String article;
+    private String description;
 
     @Column(name = "picture_url")
     private String picture_url;
 
-    @Column(name = "video_url")
-    private String video_url;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "category_sleep", joinColumns = @JoinColumn(name = "sleep_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Sleep> articles = new HashSet<>();
 
-    public Sleep() {
+    public Category() {
+
     }
 
-    public Sleep(String title, String description, String article, String picture_url, String video_url) {
+    public Category(String title, String description, String picture_url) {
         this.title = title;
         this.description = description;
-        this.article = article;
         this.picture_url = picture_url;
-        this.video_url = video_url;
     }
 
-    public Long getSleep_id() {
-        return sleep_id;
+    public Category(String title, String description, String picture_url, Set<Sleep> articles) {
+        this.title = title;
+        this.description = description;
+        this.picture_url = picture_url;
+        this.articles = articles;
     }
 
-    public void setSleep_id(Long sleep_id) {
-        this.sleep_id = sleep_id;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -67,14 +70,6 @@ public class Sleep {
         this.description = description;
     }
 
-    public String getArticle() {
-        return article;
-    }
-
-    public void setArticle(String article) {
-        this.article = article;
-    }
-
     public String getPicture_url() {
         return picture_url;
     }
@@ -83,12 +78,12 @@ public class Sleep {
         this.picture_url = picture_url;
     }
 
-    public String getVideo_url() {
-        return video_url;
+    public Set<Sleep> getArticles() {
+        return articles;
     }
 
-    public void setVideo_url(String video_url) {
-        this.video_url = video_url;
+    public void setArticles(Set<Sleep> articles) {
+        this.articles = articles;
     }
 
     @Override
@@ -96,25 +91,24 @@ public class Sleep {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Sleep sleep = (Sleep) o;
+        Category category = (Category) o;
 
-        return sleep_id != null ? sleep_id.equals(sleep.sleep_id) : sleep.sleep_id == null;
+        return id != null ? id.equals(category.id) : category.id == null;
     }
 
     @Override
     public int hashCode() {
-        return sleep_id != null ? sleep_id.hashCode() : 0;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return "Sleep{" +
-                "sleep_id=" + sleep_id +
+        return "Category{" +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", article='" + article + '\'' +
                 ", picture_url='" + picture_url + '\'' +
-                ", video_url='" + video_url + '\'' +
+                ", articles=" + articles +
                 '}';
     }
 }
