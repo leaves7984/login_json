@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
+    <link th:href="@{/sleep.css}" rel="stylesheet">
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <title>Sleep</title>
+</head>
+<body>
+
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Sleep</a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="#">Sign out</a>
+        </li>
+    </ul>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="far fa-folder-open"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/sleepTips/create}">
+                            <i class="fas fa-list-ul"></i>
+                            SleepTips
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/tips/create}">
+                            <i class="fas fa-list-ul"></i>
+                            Tips
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/web/safeSleep/create}">
+                            <i class="far fa-newspaper"></i>
+                            Article<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-video"></i>
+                            Video
+                        </a>
+                    </li>
+
+                </ul>
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Setting</span>
+                    <a class="d-flex align-items-center text-muted" href="#">
+                        <span data-feather="plus-circle"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="far fa-file-alt"></i>
+                            About Us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="far fa-file-alt"></i>
+                            Contact Us
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h2>Add New Article</h2>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <button class="btn btn-sm btn-outline-secondary">Back</button>
+                </div>
+            </div>
+            <form action="#" th:action="@{/web/safeSleep/create}" th:object="${sleep}" method="post">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" th:field="*{title}" id="title">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" th:field="*{description}"  id="description">
+                    <label for="image_url">Image_url</label>
+                    <input type="text" class="form-control" th:field="*{picture_url}" id="image_url">
+                    <!--<label for="video_url">Video_url</label>-->
+                    <!--<input type="text" class="form-control" th:field="*{video_url}" id="video_url">-->
+                    <label >Article</label>
+                    <textarea rows="10" class="form-control" th:field="*{article}" ></textarea>
+                </div>
+
+                <label>Upload Image</label>
+                <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-default btn-file">
+                        Browse… <input type="file" id="imgInp">
+                    </span>
+                </span>
+                    <input type="text" class="form-control" readonly>
+                </div>
+                <img id='img-upload'/>
+                <input class="btn btn-primary" type="submit" value="Submit" />
+
+            </form>
+        </main>
+    </div>
+</div>
+</body>
+</html>
+
+<!--<p>Title: <input type="text" th:field="*{title}" /></p>-->
+<!--<p>Description: <input type="text" th:field="*{description}" /></p>-->
+<!--<p>Article: <input type="text" th:field="*{article}" /></p>-->
+<!--<p>Image_url: <input type="text" th:field="*{picture_url}" /></p>-->
+<!--<p>Video_url: <input type="text" th:field="*{video_url}" /></p>-->

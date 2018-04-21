@@ -18,7 +18,7 @@ public class Calendar {
 
     @ManyToMany
     @JoinTable(name = "calendar_schedule", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "calendar_id"))
-    private Set<Schedule> schedules = new HashSet<>();
+    private Set<Schedule> schedule = new HashSet<>();
 
     public Calendar() {
     }
@@ -44,12 +44,12 @@ public class Calendar {
         this.date = date;
     }
 
-    public Set<Schedule> getSchedules() {
-        return schedules;
+    public Set<Schedule> getSchedule() {
+        return schedule;
     }
 
-    public void setSchedules(Set<Schedule> schedules) {
-        this.schedules = schedules;
+    public void setSchedule(Set<Schedule> schedule) {
+        this.schedule = schedule;
     }
 
     @Override
@@ -67,12 +67,4 @@ public class Calendar {
         return id != null ? id.hashCode() : 0;
     }
 
-    @Override
-    public String toString() {
-        return "Calendar{" +
-                "id=" + id +
-                ", date='" + date + '\'' +
-                ", schedules=" + schedules +
-                '}';
-    }
 }

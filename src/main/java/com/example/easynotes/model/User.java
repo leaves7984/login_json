@@ -3,16 +3,7 @@ package com.example.easynotes.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 import org.hibernate.validator.constraints.Length;
@@ -42,10 +33,12 @@ public class User {
 //    @ManyToMany
 //    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 //    private Set<Role> roles = new HashSet<>();
-
-    @ManyToMany
+//
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_calendar", joinColumns = @JoinColumn(name = "calendar_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<Calendar> calendar = new HashSet<>();
+//    @OneToOne
+//    private Calendar calendar = new Calendar();
 
     public User() {
     }
@@ -98,6 +91,8 @@ public class User {
     public void setCalendar(Set<Calendar> calendar) {
         this.calendar = calendar;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,7 @@ package com.example.easynotes.model;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "schedule")
 public class Schedule {
@@ -11,8 +12,14 @@ public class Schedule {
     @Column(name = "schedule_id")
     private Long id;
 
+    @Column(name="fromWhichDay")
+    private String fromWhichDay;
+
+    @Column(name="toWhichDay")
+    private String toWhichDay;
+
     @Column(name = "time")
-    private double time;
+    private Integer time;
 
     @Column(name = "sports")
     private String sports;
@@ -23,7 +30,9 @@ public class Schedule {
     public Schedule() {
     }
 
-    public Schedule(double time, String sports, String description) {
+    public Schedule(String fromWhichDay, String toWhichDay, Integer time, String sports, String description) {
+        this.fromWhichDay = fromWhichDay;
+        this.toWhichDay = toWhichDay;
         this.time = time;
         this.sports = sports;
         this.description = description;
@@ -37,11 +46,27 @@ public class Schedule {
         this.id = id;
     }
 
-    public double getTime() {
+    public String getFromWhichDay() {
+        return fromWhichDay;
+    }
+
+    public void setFromWhichDay(String fromWhichDay) {
+        this.fromWhichDay = fromWhichDay;
+    }
+
+    public String getToWhichDay() {
+        return toWhichDay;
+    }
+
+    public void setToWhichDay(String toWhichDay) {
+        this.toWhichDay = toWhichDay;
+    }
+
+    public Integer getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 
@@ -80,6 +105,8 @@ public class Schedule {
     public String toString() {
         return "Schedule{" +
                 "id=" + id +
+                ", fromWhichDay=" + fromWhichDay +
+                ", toWhichDay=" + toWhichDay +
                 ", time=" + time +
                 ", sports='" + sports + '\'' +
                 ", description='" + description + '\'' +
