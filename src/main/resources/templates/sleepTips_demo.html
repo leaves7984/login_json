@@ -6,7 +6,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script th:src="@{/sleep.js}"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link th:href="@{/sleep.css}" rel="stylesheet">
@@ -43,9 +42,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/sleepTips}">
+                        <a class="nav-link active" th:href="@{/web/sleepTips}">
                             <i class="fas fa-list-ul"></i>
-                            SleepTips
+                            SleepTips<span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -55,9 +54,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/web/category}">
+                        <a class="nav-link" th:href="@{/web/category}">
                             <i class="fas fa-newspaper"></i>
-                            Category<span class="sr-only">(current)</span>
+                            Category
                         </a>
                     </li>
                     <li class="nav-item">
@@ -100,26 +99,23 @@
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h2>Article Category</h2>
+                <h2>SleepTips Category</h2>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/category}">Back</a>
+                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/sleepTips/create}">Add</a>
                 </div>
             </div>
-            <form action="#" th:action="@{/web/category/create}" th:object="${category}" method="post">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" th:field="*{title}" id="title">
-                    <label for="image_url">Image_url</label>
-                    <input type="text" class="form-control" th:field="*{picture_url}" id="image_url">
-                    <label>Description</label>
-                    <textarea class="form-control" th:field="*{description}"  rows="5"></textarea>
-
-
+            <div class="container">
+                <div class="row">
+                    <div th:each="type : ${sleepTips}" class="col-lg-4 col-md-6 card">
+                        <img class="card-img-top" th:src="${type.picture_url}">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${type.title}">Card title</h5>
+                            <a href="#" class="card-link">Edit</a>
+                            <a href="#" class="card-link">Delete</a>
+                        </div>
+                    </div>
                 </div>
-
-                <input class="btn btn-primary" type="submit" value="Submit" />
-
-            </form>
+            </div>
 
         </main>
     </div>

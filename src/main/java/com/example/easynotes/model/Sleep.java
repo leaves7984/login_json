@@ -13,7 +13,7 @@ public class Sleep {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "sleep_id")
-    private Long sleep_id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
@@ -22,7 +22,7 @@ public class Sleep {
     private String description;
 
 
-    @Column(name = "article" , length = 65535, columnDefinition="TEXT")
+    @Column(name = "article" , length = 65535, columnDefinition="MEDIUMTEXT")
     @Type(type="text")
     private String article;
 
@@ -43,12 +43,12 @@ public class Sleep {
         this.video_url = video_url;
     }
 
-    public Long getSleep_id() {
-        return sleep_id;
+    public Long getid() {
+        return id;
     }
 
-    public void setSleep_id(Long sleep_id) {
-        this.sleep_id = sleep_id;
+    public void setid(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -98,18 +98,18 @@ public class Sleep {
 
         Sleep sleep = (Sleep) o;
 
-        return sleep_id != null ? sleep_id.equals(sleep.sleep_id) : sleep.sleep_id == null;
+        return id != null ? id.equals(sleep.id) : sleep.id == null;
     }
 
     @Override
     public int hashCode() {
-        return sleep_id != null ? sleep_id.hashCode() : 0;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
     public String toString() {
         return "Sleep{" +
-                "sleep_id=" + sleep_id +
+                "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", article='" + article + '\'' +

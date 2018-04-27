@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script th:src="@{/sleep.js}"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link th:href="@{/sleep.css}" rel="stylesheet">
@@ -37,7 +34,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/sleepTips/create}">
+                        <a class="nav-link" th:href="@{/web/st_category}">
+                            <i class="fas fa-newspaper"></i>
+                            ST_Category
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/sleepTips}">
                             <i class="fas fa-list-ul"></i>
                             SleepTips
                         </a>
@@ -49,13 +52,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/category/create}">
+                        <a class="nav-link" th:href="@{/web/category}">
                             <i class="fas fa-newspaper"></i>
                             Category
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/safeSleep/create}">
+                        <a class="nav-link" th:href="@{/web/safeSleep}">
                             <i class="far fa-newspaper"></i>
                             Article
                         </a>
@@ -101,20 +104,26 @@
             </div>
             <form action="#" th:action="@{/web/tips/create}" th:object="${tip}" method="post">
                 <div class="form-group">
-                    <label>Title</label>
-                    <select class="form-control" name="selectedTitle">
-                        <option value="default">Select a title</option>
-                        <option th:each="type : ${sleepTips}"
+                    <label>Category</label>
+                    <select class="form-control" name="selectedCategory" id="category">
+                        <option value="default">Select a category</option>
+                        <option th:each="type : ${st_categories}"
                                 th:value="${type.getTitle()}"
-                                th:text="${type.getTitle()}"></option>
+                                th:text="${type.getTitle()}">
+                        </option>
+
                     </select>
+
+                    <label>Title</label>
+                    <select class="form-control" name="selectedTitle" id="showtext"></select>
+
                     <label for="title">Topic</label>
                     <input type="text" class="form-control" th:field="*{topic}" id="title">
                     <label>Content</label>
                     <textarea class="form-control" th:field="*{content}" id="article" rows="5"></textarea>
 
-                </div>
 
+                </div>
                 <input class="btn btn-primary" type="submit" value="Submit" />
 
             </form>
@@ -123,5 +132,31 @@
     </div>
 </div>
 
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!--<script th:src="@{/tip.js}"></script>-->
+    <script>
+        init();
+        function init(){
+            $("#showtext").hide();
+        }
+        $("#category").change(function () {
+            var text = $("#category option:selected").val();
+            $.get( "/api/stByTitle?title=" + text, function( data ) {
+                console.log(data);
+                $("#showtext").empty();
+
+                if(data.sleepTips.length != null){
+                    $("#showtext").show();
+                    data.sleepTips.forEach(function(item, index) {
+                        var option = "<option value = " + item.title + ">" + item.title +  "</option>";
+                        $("#showtext").append(option);
+                    });
+                }
+
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script th:src="@{/sleep.js}"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
     <link th:href="@{/sleep.css}" rel="stylesheet">
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+    <script>tinymce.init({ selector:'textarea' });</script>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-
     <title>Sleep</title>
 </head>
 <body>
 
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Sleep</a>
-    <!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="#">Sign out</a>
@@ -55,15 +54,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/web/category}">
+                        <a class="nav-link" th:href="@{/web/category}">
                             <i class="fas fa-newspaper"></i>
-                            Category<span class="sr-only">(current)</span>
+                            Category
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/safeSleep}">
+                        <a class="nav-link active" th:href="@{/web/safeSleep}">
                             <i class="far fa-newspaper"></i>
-                            Article
+                            Article<span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -100,33 +99,30 @@
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h2>Article Category</h2>
+                <h2>Add New Article</h2>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/category}">Back</a>
+                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/safeSleep/create}">Add</a>
                 </div>
             </div>
-            <form action="#" th:action="@{/web/category/create}" th:object="${category}" method="post">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" th:field="*{title}" id="title">
-                    <label for="image_url">Image_url</label>
-                    <input type="text" class="form-control" th:field="*{picture_url}" id="image_url">
-                    <label>Description</label>
-                    <textarea class="form-control" th:field="*{description}"  rows="5"></textarea>
-
-
+            <div class="container">
+                <div th:each="type : ${categories}">
+                    <p th:text="${type.title}"></p>
+                    <hr>
+                    <div class="row">
+                        <div th:each="one : ${type.getArticles()}" class="col-lg-4 col-md-6 card">
+                            <img class="card-img-top" th:src="${one.picture_url}">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${one.title}">Card title</h5>
+                                <p th:text="${one.description}"></p>
+                                <a href="#" class="card-link">Edit</a>
+                                <a href="#" class="card-link">Delete</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <input class="btn btn-primary" type="submit" value="Submit" />
-
-            </form>
-
+            </div>
         </main>
     </div>
 </div>
-
 </body>
 </html>
-
-
-

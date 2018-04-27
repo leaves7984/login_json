@@ -37,9 +37,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/st_category}">
+                        <a class="nav-link active" th:href="@{/web/st_category}">
                             <i class="fas fa-newspaper"></i>
-                            ST_Category
+                            ST_Category<span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -55,9 +55,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/web/category}">
+                        <a class="nav-link" th:href="@{/web/category}">
                             <i class="fas fa-newspaper"></i>
-                            Category<span class="sr-only">(current)</span>
+                            Category
                         </a>
                     </li>
                     <li class="nav-item">
@@ -100,21 +100,17 @@
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                <h2>Article Category</h2>
+                <h2>SleepTips Category</h2>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/category}">Back</a>
+                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/st_category}">Back</a>
                 </div>
             </div>
-            <form action="#" th:action="@{/web/category/create}" th:object="${category}" method="post">
+            <form action="#" th:action="@{/web/st_category/create}" th:object="${st_category}" method="post">
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" th:field="*{title}" id="title">
-                    <label for="image_url">Image_url</label>
-                    <input type="text" class="form-control" th:field="*{picture_url}" id="image_url">
                     <label>Description</label>
                     <textarea class="form-control" th:field="*{description}"  rows="5"></textarea>
-
-
                 </div>
 
                 <input class="btn btn-primary" type="submit" value="Submit" />

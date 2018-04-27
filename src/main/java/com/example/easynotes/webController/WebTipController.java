@@ -1,7 +1,10 @@
 package com.example.easynotes.webController;
 
+import com.example.easynotes.model.Category;
+import com.example.easynotes.model.ST_Category;
 import com.example.easynotes.model.SleepTips;
 import com.example.easynotes.model.Tip;
+import com.example.easynotes.repository.ST_CategoryRepository;
 import com.example.easynotes.repository.SleepTipsRepository;
 import com.example.easynotes.repository.TipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("web")
@@ -24,28 +28,41 @@ public class WebTipController {
     @Autowired
     SleepTipsRepository sleepTipsRepository;
 
+    @Autowired
+    ST_CategoryRepository st_categoryRepository;
+
 
     @GetMapping("/tips/create")
     public String TipForm(Model model) {
-        List<SleepTips> sleepTips = sleepTipsRepository.findAll();
+        List<ST_Category> st_categories = st_categoryRepository.findAll();
+//        List<SleepTips> sleepTips = sleepTipsRepository.findAll();
         Tip tip = new Tip();
-        String selected = "";
         model.addAttribute("tip", tip);
-        model.addAttribute("sleepTips",sleepTips);
+        model.addAttribute("st_categories",st_categories);
         return "tip";
     }
     @PostMapping("/tips/create")
     public String SleepTipsSubmit(@ModelAttribute("tip") Tip tip, HttpServletRequest request) {
 
         String selectedTitle= request.getParameter("selectedTitle");
+        String selectedCategory = request.getParameter("selectedCategory");
         System.out.println(selectedTitle);
         tipRepository.save(tip);
         System.out.println(tip);
         try{
-            SleepTips sleepTips = sleepTipsRepository.findByTitle(selectedTitle);
-            sleepTips.getTips().add(tip);
-            System.out.println(sleepTips);
-            sleepTipsRepository.save(sleepTips);
+            ST_Category st_category = st_categoryRepository.findByTitle(selectedCategory);
+            Set<SleepTips> sleepTipsAll = st_category.getSleepTips();
+            for(SleepTips item:sleepTipsAll){
+                System.out.println(item);
+                if(item.getTitle().equals(selectedTitle)){
+                    item.getTips().add(tip);
+                    sleepTipsRepository.save(item);
+                    st_categoryRepository.save(st_category);
+                    System.out.println(st_category);
+                }
+            }
+
+
 
         }catch (Exception ex) {
             return ex.toString();

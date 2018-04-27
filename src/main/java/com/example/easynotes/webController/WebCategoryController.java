@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/web")
 public class WebCategoryController {
@@ -20,7 +22,14 @@ public class WebCategoryController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @GetMapping("/category")
+    public String ST_SleepTips(Model model){
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories",categories);
+        return "category_demo";
 
+
+    }
     @GetMapping("/category/create")
     public String SleepTipsForm(Model model) {
         Category category = new Category();
@@ -34,6 +43,6 @@ public class WebCategoryController {
     public String SleepTipsSubmit(@ModelAttribute Category category) {
         categoryRepository.save(category);
         System.out.println(category);
-        return "category";
+        return "category_demo";
     }
 }

@@ -23,6 +23,14 @@ public class WebSleepController {
     @Autowired
     SleepRepository sleepRepository;
 
+    @GetMapping("/safeSleep")
+    public String ST_SleepTips(Model model){
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories",categories);
+        return "sleep_demo";
+
+
+    }
     @GetMapping("/safeSleep/create")
     public String safeSleepForm(Model model) {
         List<Category> categories = categoryRepository.findAll();
@@ -45,15 +53,15 @@ public class WebSleepController {
         try{
             Category category = categoryRepository.findByTitle(selectedTitle);
 
-//            category.getArticles().add(sleep);
+            category.getArticles().add(sleep);
             System.out.println(category);
-//            categoryRepository.save(category);
+            categoryRepository.save(category);
 
         }catch (Exception ex){
             return ex.toString();
         }
 
-        return "sleep";
+        return "sleep_demo";
 
     }
 

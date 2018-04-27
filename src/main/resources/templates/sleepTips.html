@@ -6,7 +6,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-    <script th:src="@{/sleep.js}"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link th:href="@{/sleep.css}" rel="stylesheet">
@@ -37,7 +36,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/web/sleepTips/create}">
+                        <a class="nav-link" th:href="@{/web/st_category}">
+                            <i class="fas fa-newspaper"></i>
+                            ST_Category
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/web/sleepTips}">
                             <i class="fas fa-list-ul"></i>
                             SleepTips<span class="sr-only">(current)</span>
                         </a>
@@ -49,13 +54,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/category/create}">
+                        <a class="nav-link" th:href="@{/web/category}">
                             <i class="fas fa-newspaper"></i>
                             Category
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/web/safeSleep/create}">
+                        <a class="nav-link" th:href="@{/web/safeSleep}">
                             <i class="far fa-newspaper"></i>
                             Article
                         </a>
@@ -96,11 +101,17 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                 <h2>SleepTips Category</h2>
                 <div class="btn-toolbar mb-2 mb-md-0">
-                    <button class="btn btn-sm btn-outline-secondary">Back</button>
+                    <a class="btn btn-sm btn-outline-secondary" th:href="@{/web/sleepTips}">Back</a>
                 </div>
             </div>
             <form action="#" th:action="@{/web/sleepTips/create}" th:object="${sleepTips}" method="post">
                 <div class="form-group">
+                    <select class="form-control" name="selectedTitle">
+                        <option value="default">Select a title</option>
+                        <option th:each="type : ${st_categories}"
+                                th:value="${type.title}"
+                                th:text="${type.title}"></option>
+                    </select>
                     <label for="title">Title</label>
                     <input type="text" class="form-control" th:field="*{title}" id="title">
                     <label for="image_url">Image_url</label>
