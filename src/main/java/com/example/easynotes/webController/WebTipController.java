@@ -44,9 +44,10 @@ public class WebTipController {
     @PostMapping("/tips/create")
     public String SleepTipsSubmit(@ModelAttribute("tip") Tip tip, HttpServletRequest request) {
 
-        String selectedTitle= request.getParameter("selectedTitle");
+        String id= request.getParameter("selectedTitle");
         String selectedCategory = request.getParameter("selectedCategory");
-        System.out.println(selectedTitle);
+        System.out.println(id);
+        System.out.println(selectedCategory);
         tipRepository.save(tip);
         System.out.println(tip);
         try{
@@ -54,7 +55,8 @@ public class WebTipController {
             Set<SleepTips> sleepTipsAll = st_category.getSleepTips();
             for(SleepTips item:sleepTipsAll){
                 System.out.println(item);
-                if(item.getTitle().equals(selectedTitle)){
+                if(item.getId().equals(Long.valueOf(id))){
+                    System.out.println("success");
                     item.getTips().add(tip);
                     sleepTipsRepository.save(item);
                     st_categoryRepository.save(st_category);

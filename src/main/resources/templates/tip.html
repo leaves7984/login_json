@@ -6,7 +6,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link th:href="@{/sleep.css}" rel="stylesheet">
+    <link href="../static/css/sleep.css" th:href="@{/css/sleep.css}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 
     <title>Sleep</title>
@@ -135,28 +135,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!--<script th:src="@{/tip.js}"></script>-->
-    <script>
-        init();
-        function init(){
-            $("#showtext").hide();
-        }
-        $("#category").change(function () {
-            var text = $("#category option:selected").val();
-            $.get( "/api/stByTitle?title=" + text, function( data ) {
-                console.log(data);
-                $("#showtext").empty();
+    <script src="../static/js/tip.js" th:src="@{/js/tip.js}"></script>
 
-                if(data.sleepTips.length != null){
-                    $("#showtext").show();
-                    data.sleepTips.forEach(function(item, index) {
-                        var option = "<option value = " + item.title + ">" + item.title +  "</option>";
-                        $("#showtext").append(option);
-                    });
-                }
-
-            });
-        });
-    </script>
 </body>
 </html>
